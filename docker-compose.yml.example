@@ -1,0 +1,31 @@
+version: '2'
+services:
+    https-portal:
+      image: steveltn/https-portal:1
+      volumes:
+        - ./ops/config/nginx/test.dev.conf.erb:/var/lib/nginx-conf/test.dev.conf.erb:ro
+        - ./ops/config/nginx/test.dev.ssl.conf.erb:/var/lib/nginx-conf/test.dev.ssl.conf.erb:ro
+      depends_on:
+        - app
+      ports:
+        - '80:80'
+        - '443:443'
+      environment:
+        DOMAINS: 'test.dev'
+        STAGE: 'local'
+      volumes_from:
+        - app
+    app:
+      build:
+        context: ops/dockerfiles/piwik/
+        args:
+          - user=${UID}
+      depends_on:
+        - db
+      volumes:
+        - ./config:/var/www/html/config
+      user: ${UID}:${UID}
+    db:
+       image: mariadb
+       environment:
+         MYSQL_ROOT_PASSWORD: CHANGE_ME

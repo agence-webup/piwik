@@ -1,0 +1,7 @@
+config/*
+!config/.gitkeep
+ops/config/nginx/*
+!ops/config/nginx/example.com.conf.erb.example
+!ops/config/nginx/example.com.ssl.conf.erb.example
+docker-compose.yml
+!docker-compose.yml.example
