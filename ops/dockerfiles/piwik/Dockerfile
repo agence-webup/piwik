@@ -44,8 +44,7 @@ RUN chmod +x /entrypoint.sh
 
 # make /var/www/html world-writeable to allow php-fpm to run as random uid
 RUN mkdir -p /var/www/html \
-    && chown docker:docker /var/www/html \
-    && chmod a+rwx /var/www/html
+    && chown docker:docker /var/www/html
 
 # test whether www-data has indeed uid 33
 # RUN test "$(id -u www-data)" -eq 33
